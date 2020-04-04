@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -24,5 +25,21 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+  
+.chatHeaderWrapper {
+    height: 90px;
+    color: rgb(39, 39, 39);
+    z-index: 2;
+}
+.chatRoom {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+router-outlet {
+    height:0;
 }
 </style>

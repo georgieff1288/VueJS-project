@@ -1,28 +1,28 @@
 <template>
   <div class="navBar">
     <div id="logo"></div>
-    <div id="heading"><a routerLink="/">Chat App </a></div>
+    <div id="heading"><router-link to="/">Chat App </router-link></div>
     <div class="links">    
         <span>
-            <a >Login</a>
+            <router-link to="/login">Login</router-link>
         </span>
         <span>
-           <a >Sign Up</a>
+           <router-link to="/signup" >Sign Up</router-link>
         </span>
         <span>
             <span >Hello, userEmail</span>
         </span>
         <span>
-            <a >Chatrooms</a>
+            <router-link to="/" >Chatrooms</router-link>
         </span>
         <span>
-            <a >Create chatroom</a>
+            <router-link to="/" >Create chatroom</router-link>
         </span>
         <span>
-            <a >Settings</a>
+            <router-link to="/" >Settings</router-link>
         </span>
           <span>
-            <a >Logout</a>
+            <router-link to="/" >Logout</router-link>
         </span>
   </div>
 </div>
@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .navBar{
     width: 100%;
     display: flex;
@@ -64,7 +64,8 @@ export default {
     color: rgb(0, 0, 0);
 }
 
-.links a{
+.links span{
+    font-size: large;
     color: #555;
     text-decoration: none;
     transition: ease-in 0.2s;
