@@ -3,34 +3,58 @@
     <div id="logo"></div>
     <div id="heading"><router-link to="/">Chat App </router-link></div>
     <div class="links">    
-        <span>
+        <span v-if="!loggedIn">
             <router-link to="/login">Login</router-link>
         </span>
-        <span>
+        <span v-if="!loggedIn">
            <router-link to="/signup" >Sign Up</router-link>
         </span>
-        <span>
+        <span v-if="loggedIn">
             <span >Hello, userEmail</span>
         </span>
-        <span>
+        <span v-if="loggedIn">
             <router-link to="/" >Chatrooms</router-link>
         </span>
-        <span>
+        <span v-if="loggedIn">
             <router-link to="/" >Create chatroom</router-link>
         </span>
-        <span>
+        <span v-if="loggedIn">
             <router-link to="/" >Settings</router-link>
         </span>
-          <span>
-            <router-link to="/" >Logout</router-link>
+          <span v-if="loggedIn">
+            <a href="/"  @click="signOut">Logout</a>
         </span>
   </div>
 </div>
 </template>
 
 <script>
-export default {
+import {logOut} from '../../services/auth'
+import {auth} from '../../firebase'
 
+export default {    
+    mounted() {
+        this.isLogged();
+    },
+    methods:{   
+        isLogged(){
+             auth.onAuthStateChanged(user=>{
+                if(user){
+                    this.loggedIn = true
+                }else{
+                    this.loggedIn = false
+                }                
+            })
+        },    
+        signOut() {
+            logOut();
+        }
+    },
+    data(){
+        return{
+            loggedIn: false
+        }        
+    }
 }
 </script>
 

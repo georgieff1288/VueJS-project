@@ -1,43 +1,56 @@
 <template>
   <div >
     <div class="signUpCard">
-     <form @submit.prevent="signup">
+     <form @submit.prevent="register">
       <h2 class="heading">Sign Up</h2>
 
      <label class="label">Email</label>
-     <br/><span>Please enter valid email</span> 
+     <template v-if="$v.email.$error">
+     <br/><span v-if="!$v.email.email">Please enter valid email</span>
+     </template> 
        <input 
          type="email"  
          v-model="email"
+         @blur="$v.email.$touch"
+
          placeholder="Enter your email address" 
          class="formInput"/>
          
          
   
       <label class="label">Password</label>
-      <br/><span>Password must be at least 6 characters</span>      
+      <template v-if="$v.password.$error">
+      <br/><span v-if="!$v.password.minLength">Password must be at least 6 characters</span>
+      </template>      
         <input     
           type="password"   
           v-model="password"
+          @blur="$v.password.$touch"
           placeholder="Choose a password" 
           class="formInput"/>
 
       <label class="label">Confirm password</label>
-      <br/><span>Password and confirm password does not match</span>       
+      <template v-if="$v.confirmPassword.$error">
+      <br/><span v-if="!$v.confirmPassword.sameAs">Password and confirm password does not match</span>
+      </template>       
         <input
           type="password" 
           v-model="confirmPassword"
+          @blur="$v.confirmPassword.$touch"
           placeholder="Confirm password" 
           class="formInput"/>
   
       <label class="label">Username</label>
-      <br/><span>Username must be at least 3 characters</span> 
+      <template v-if="$v.displayName.$error">
+      <br/><span v-if="!$v.displayName.minLength">Username must be at least 3 characters</span> 
+      </template> 
         <input 
-          v-model="displayName"           
+          v-model="displayName"
+          @blur="$v.displayName.$touch"           
           placeholder="Enter a username" 
           class="formInput"/>
   
-        <button class="btn" id="btn-signUp">
+        <button :disabled="$v.$invalid" class="btn" id="btn-signUp">
                 Sign Up
         </button>
       </form>
@@ -46,10 +59,18 @@
 </template>
 
 <script>
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import {signUp} from '../../services/auth'
+import { validationMixin } from 'vuelidate';
+import { required, minLength, email } from 'vuelidate/lib/validators';
+
+function sameAs(field) {
+  return function (value) {
+    return this[field] === value;
+  }
+}
+
 export default {
-data() {
+  data() {
     return {
       email: "",
       password: "",
@@ -57,15 +78,32 @@ data() {
       displayName:""
     };
   },
+  mixins: [validationMixin],
+  validations: {
+    email: {
+      required,
+      email
+      },
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    confirmPassword:{
+      sameAs: sameAs('password')
+    },
+    displayName:{
+      required,
+      minLength: minLength(3)
+    }
+  },
   methods: {
-    signup() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          console.log("here");
-          this.$router.replace({ name: "home" });
-        });
+    async register() {
+      const data = {
+        email: this.email,
+        password: this.password,
+        displayName: this.displayName
+      }   
+      await signUp(data)
     }
   }
 };

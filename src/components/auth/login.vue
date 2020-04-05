@@ -1,24 +1,30 @@
 <template>
   <div class="container">
     <div class="loginCard">
-      <form>
+      <form @submit.prevent="logIn">
         <h2 class="heading">Log In</h2>
       
-        <span>Please enter valid email</span>
+        <template v-if="$v.email.$error">
+        <br/><span v-if="!$v.email.email">Please enter valid email</span>
+        </template>
         <input 
           type="email" 
           v-model="email"
+          @blur="$v.email.$touch"
           placeholder="Enter your email address"
           class="formInput"/>
         
-        <span>Password must be at least 6 characters</span>
+        <template v-if="$v.password.$error">
+        <br/><span v-if="!$v.password.minLength">Password must be at least 6 characters</span>
+        </template>
         <input type="password"
-          v-model="password" 
+          v-model="password"
+          @blur="$v.password.$touch" 
           placeholder="Enter your password"
           class="formInput"/>
         
         
-        <button class="btn" id="btn-login">
+        <button :disabled="$v.$invalid" class="btn" id="btn-login">
                 Log In
         </button>
       </form>      
@@ -27,12 +33,36 @@
 </template>
 
 <script>
+import {login} from '../../services/auth'
+import { validationMixin } from 'vuelidate';
+import { required, minLength, email } from 'vuelidate/lib/validators';
+
 export default {
 data() {
     return {
       email: "",
       password: ""
     };
+  },
+  mixins: [validationMixin],
+  validations: {
+    email: {
+      required,
+      email
+      },
+    password: {
+      required,
+      minLength: minLength(6)
+    }
+  },
+  methods:{    
+    async logIn(){
+      const data = {
+        email: this.email,
+        password: this.password
+      }
+      await login(data)
+    }
   }
 }
 </script>
