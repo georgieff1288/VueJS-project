@@ -30,11 +30,28 @@ export async function login(data){
           })
 }
 
-export async function logOut() {
+export async function logOut(route) {
     const data = {uid: auth.currentUser.uid, status:'offline'}
     setUserStatus(data);
     return await auth.signOut()
-        .then(() => { router.push('/') })
+        .then(() => { router.push(route) })
 }
 
-
+export async function editProfile(email, password, displayName){
+    const user = auth.currentUser;
+    const data = {
+        email: email,
+        displayName:displayName,
+        status:'offline',
+        uid: user.uid
+    }
+    const isError = false;
+    setUserData(data); 
+    await user.updatePassword(password).catch((error) => {
+            window.alert(error.message), this.isError = true});
+    await user.updateEmail(email).catch((error) => {
+            window.alert(error.message), this.isError = true});   
+    if(!isError){
+        logOut('/login').then(window.alert('Please login with new credentials.'));
+    }    
+}

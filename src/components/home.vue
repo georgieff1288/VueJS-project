@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-    <div class="title">
+    <div class="title" v-if="!userEmail">
         <h1>
             Please <router-link to="/login">Login</router-link> to start a chat!
         </h1> 
@@ -11,9 +11,9 @@
 		</h1>
     </div>  
         
-    <div class="title" >
+    <div class="title" v-if="userEmail">
         <h1>
-            Welcome, userEmail. You can start a chat.
+            Welcome, {{userEmail}}. You can start a chat.
         </h1>
     </div>   
       
@@ -21,9 +21,26 @@
 </template>
 
 <script>
+import {auth} from '../firebase'
 
-export default {         
-    
+export default {
+    mounted(){
+        this.getEmail();
+    },
+    methods:{
+        getEmail(){
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    this.userEmail = user.email          
+                }           
+            })
+        }
+    },         
+    data(){
+        return{
+            userEmail:''
+        }
+    }
 }
 </script>
 

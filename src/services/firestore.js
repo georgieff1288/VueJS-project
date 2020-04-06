@@ -13,10 +13,10 @@ export async function setUserStatus(data) {
     return await firestore.collection('users').doc(data.uid).update({ status: data.status })
 }
 
-export async function getCurrentUserData() {
+export function getCurrentUserData() {
     if (auth.currentUser) {
         const uid = auth.currentUser.uid;
-        return await firestore.collection('users').doc(uid);
+        return firestore.collection('users').doc(uid)
     }
     return null;
-  }
+}

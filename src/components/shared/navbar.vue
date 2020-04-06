@@ -4,25 +4,25 @@
     <div id="heading"><router-link to="/">Chat App </router-link></div>
     <div class="links">    
         <span v-if="!loggedIn">
-            <router-link to="/login">Login</router-link>
+            <router-link to="/login" class="routerLink">Login</router-link>
         </span>
         <span v-if="!loggedIn">
-           <router-link to="/signup" >Sign Up</router-link>
+           <router-link to="/signup" class="routerLink">Sign Up</router-link>
         </span>
         <span v-if="loggedIn">
-            <span >Hello, userEmail</span>
+            <span id="userEmail">Hello, {{userEmail}}</span>
         </span>
         <span v-if="loggedIn">
-            <router-link to="/" >Chatrooms</router-link>
+            <router-link to="/" class="routerLink">Chatrooms</router-link>
         </span>
         <span v-if="loggedIn">
-            <router-link to="/" >Create chatroom</router-link>
+            <router-link to="/"  class="routerLink">Create chatroom</router-link>
         </span>
         <span v-if="loggedIn">
-            <router-link to="/" >Settings</router-link>
+            <router-link to="/settings" class="routerLink">Settings</router-link>
         </span>
           <span v-if="loggedIn">
-            <a href="/"  @click="signOut">Logout</a>
+            <a href="/"  @click="signOut" class="routerLink">Logout</a>
         </span>
   </div>
 </div>
@@ -32,7 +32,7 @@
 import {logOut} from '../../services/auth'
 import {auth} from '../../firebase'
 
-export default {    
+export default {      
     mounted() {
         this.isLogged();
     },
@@ -40,19 +40,21 @@ export default {
         isLogged(){
              auth.onAuthStateChanged(user=>{
                 if(user){
-                    this.loggedIn = true
+                    this.userEmail = user.email
+                    this.loggedIn = true                    
                 }else{
                     this.loggedIn = false
                 }                
             })
         },    
         signOut() {
-            logOut();
+            logOut('/');
         }
     },
     data(){
         return{
-            loggedIn: false
+            loggedIn: false,
+            userEmail:''
         }        
     }
 }
@@ -86,9 +88,12 @@ export default {
 #heading > a{
     text-decoration: none;
     color: rgb(0, 0, 0);
+    margin-left: 10%;
+    float: left;
 }
 
-.links span{
+.routerLink{
+    margin-left: 10px;
     font-size: large;
     color: #555;
     text-decoration: none;

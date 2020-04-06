@@ -1,28 +1,26 @@
 <template>
-  <div >
-    <div class="signUpCard">
-     <form @submit.prevent="register">
-      <h2 class="heading">Sign Up</h2>
-
-     <label class="label">Email</label>
-     <template v-if="$v.email.$error">
-     <br/><span v-if="!$v.email.email">Please enter valid email</span>
-     </template> 
-       <input 
-         type="email"  
+  <div>
+    <div class="editCard">
+     <form @submit.prevent="edit">
+      <h2 class="heading">Edit profile</h2>
+  
+      <label class="label">Email</label>
+      <template v-if="$v.email.$error">
+      <br/><span v-if="!$v.email.email">Please enter valid email</span>
+      </template>
+         <input          
+         type="email" 
          v-model="email"
          @blur="$v.email.$touch"
-         placeholder="Enter your email address" 
+         placeholder="Enter your email address"
          class="formInput"/>
-         
-         
   
       <label class="label">Password</label>
       <template v-if="$v.password.$error">
       <br/><span v-if="!$v.password.minLength">Password must be at least 6 characters</span>
-      </template>      
-        <input     
-          type="password"   
+      </template> 
+        <input 
+          type="password" 
           v-model="password"
           @blur="$v.password.$touch"
           placeholder="Choose a password" 
@@ -31,26 +29,26 @@
       <label class="label">Confirm password</label>
       <template v-if="$v.confirmPassword.$error">
       <br/><span v-if="!$v.confirmPassword.sameAs">Password and confirm password does not match</span>
-      </template>       
-        <input
-          type="password" 
+      </template>
+        <input 
+          type="password"
           v-model="confirmPassword"
-          @blur="$v.confirmPassword.$touch"
+          @blur="$v.confirmPassword.$touch" 
           placeholder="Confirm password" 
           class="formInput"/>
+
+        <label class="label">Username</label>
+        <template v-if="$v.displayName.$error">
+        <br/><span v-if="!$v.displayName.minLength">Username must be at least 3 characters</span> 
+        </template>
+          <input
+            v-model="displayName"
+            @blur="$v.displayName.$touch"
+            placeholder="Enter a username"
+            class="formInput"/>
   
-      <label class="label">Username</label>
-      <template v-if="$v.displayName.$error">
-      <br/><span v-if="!$v.displayName.minLength">Username must be at least 3 characters</span> 
-      </template> 
-        <input 
-          v-model="displayName"
-          @blur="$v.displayName.$touch"           
-          placeholder="Enter a username" 
-          class="formInput"/>
-  
-        <button :disabled="$v.$invalid" class="btn" id="btn-signUp">
-                Sign Up
+        <button :disabled="$v.$invalid" class="btn" id="btn-edit">
+                Edit
         </button>
       </form>
     </div>
@@ -58,7 +56,8 @@
 </template>
 
 <script>
-import {signUp} from '../../services/auth'
+import { getCurrentUserData } from '../services/firestore'
+import { editProfile } from '../services/auth'
 import { validationMixin } from 'vuelidate';
 import { required, minLength, email } from 'vuelidate/lib/validators';
 
@@ -69,12 +68,12 @@ function sameAs(field) {
 }
 
 export default {
-  data() {
+    data() {
     return {
       email: "",
       password: "",
       confirmPassword:"",
-      displayName:""
+      displayName:"",
     };
   },
   mixins: [validationMixin],
@@ -94,18 +93,20 @@ export default {
       required,
       minLength: minLength(3)
     }
-  },
-  methods: {
-    async register() {
-      const data = {
-        email: this.email,
-        password: this.password,
-        displayName: this.displayName
-      }   
-      await signUp(data)
+    },
+    created(){
+        this.getOldData();
+    },
+    methods: {
+        edit(){
+            editProfile(this.email, this.password, this.displayName);            
+        },
+        getOldData(){
+            getCurrentUserData()
+                .onSnapshot(userData=>{this.email = userData.data().email, this.displayName = userData.data().displayName});
+        }
     }
-  }
-};
+}
 </script>
 
 <style scoped>
@@ -114,7 +115,7 @@ export default {
   background:rgb(253, 254, 255);
 }
 
-.signUpCard{
+.editCard{
   display: block;
   background-color: rgba(255,255,255,0.85);
   width: 600px;
@@ -148,12 +149,12 @@ export default {
   width: 103%;
 }
 
-#btn-signUp{
+#btn-edit{
     background-color:rgb(42, 40, 69);
 }
 
 
-#btn-signUp:disabled{
+#btn-edit:disabled{
     background-color:rgb(238, 238, 238);
     color: rgb(153, 153, 153);
 }
