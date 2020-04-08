@@ -45,13 +45,18 @@ export async function editProfile(email, password, displayName){
         status:'offline',
         uid: user.uid
     }
-    const isError = false;
-    setUserData(data); 
+    const isError = false;     
     await user.updatePassword(password).catch((error) => {
             window.alert(error.message), this.isError = true});
     await user.updateEmail(email).catch((error) => {
             window.alert(error.message), this.isError = true});   
     if(!isError){
+        setUserData(data);
         logOut('/login').then(window.alert('Please login with new credentials.'));
     }    
+}
+
+
+export function getCurrentUSerUid(){
+    return auth.currentUser.uid;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="loginCard">
       <form @submit.prevent="logIn">
         <h2 class="heading">Log In</h2>

@@ -13,10 +13,10 @@
             <span id="userEmail">Hello, {{userEmail}}</span>
         </span>
         <span v-if="loggedIn">
-            <router-link to="/" class="routerLink">Chatrooms</router-link>
+            <router-link to="/chatrooms" class="routerLink">Chatrooms</router-link>
         </span>
         <span v-if="loggedIn">
-            <router-link to="/"  class="routerLink">Create chatroom</router-link>
+            <router-link to="/createchatroom"  class="routerLink">Create chatroom</router-link>
         </span>
         <span v-if="loggedIn">
             <router-link to="/settings" class="routerLink">Settings</router-link>
@@ -95,7 +95,7 @@ export default {
 .routerLink{
     margin-left: 10px;
     font-size: large;
-    color: #555;
+    color: rgb(85, 85, 85);
     text-decoration: none;
     transition: ease-in 0.2s;
     padding-right: 12px;
@@ -107,5 +107,7 @@ export default {
 #userEmail {
     padding-right: 16px;
     font-weight: bold;
+    font-size: 1.6em;
+    color: rgb(0, 0, 0);
 }
 </style>
