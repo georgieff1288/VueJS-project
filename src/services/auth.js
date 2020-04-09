@@ -14,7 +14,7 @@ export async function signUp(userData) {
                 })
         }).catch((error) => {
             window.alert(error.message)
-          })
+            })
 }
 
 export async function login(data){
@@ -27,7 +27,7 @@ export async function login(data){
                 })            
         }).catch((error) => {
             window.alert(error.message)
-          })
+            })
 }
 
 export async function logOut(route) {
@@ -57,6 +57,6 @@ export async function editProfile(email, password, displayName){
 }
 
 
-export function getCurrentUSerUid(){
+export function getCurrentUserUid(){
     return auth.currentUser.uid;
 }

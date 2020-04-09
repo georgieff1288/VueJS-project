@@ -1,23 +1,15 @@
 <template>
   <div class="container">
-
     <div class="title" v-if="!userEmail">
-        <h1>
-            Please <router-link to="/login">Login</router-link> to start a chat!
-        </h1> 
-		<br>
-		<h1>
-			Don't have an account yet? <router-link to="/signup">Sign-up</router-link> right now.
-		</h1>
-    </div>  
-        
+        <h1>Please <router-link to="/login">Login</router-link> to start a chat!</h1>
+        <br>
+        <h1>Don't have an account yet? <router-link to="/signup">Sign-up</router-link> right now.</h1>
+    </div>
+
     <div class="title" v-if="userEmail">
-        <h1>
-            Welcome, {{userEmail}}. You can start a chat.
-        </h1>
-    </div>   
-      
-</div>
+        <h1>Welcome, {{userEmail}}. You can start a chat.</h1>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,14 +20,12 @@ export default {
         this.getEmail();
     },
     methods:{
-        getEmail(){
-            auth.onAuthStateChanged(user=>{
-                if(user){
-                    this.userEmail = user.email          
-                }           
-            })
-        }
-    },         
+        getEmail(){auth.onAuthStateChanged(user=>{
+            if(user){
+                this.userEmail = user.email
+            }
+        })}
+    },
     data(){
         return{
             userEmail:''
@@ -51,17 +41,18 @@ export default {
     background: rgba(255,255,255);
 }
 
-.title {
+.title{
     margin: auto;    
     margin-top: 40px;
-    width: 50%;
+    width: 70%;
+    text-align: center;
 }
 
 h1{
     height: 2em;
 }
 
-a {
+a{
     text-decoration: none;
-}  
+}
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div>
     <form class="createChatroom" @submit.prevent="create">        
-        <h2 >Create chatroom</h2>
-        <template v-if="$v.chatroomName.$error">
+      <h2 >Create chatroom</h2>
+      <template v-if="$v.chatroomName.$error">
         <span v-if="!$v.chatroomName.minLength">Name must be at least 6 characters</span>
-        </template>            
+      </template>            
         <input
           v-model="chatroomName"
           @blur="$v.chatroomName.$touch" 
@@ -14,8 +14,8 @@
         <button :disabled="$v.$invalid" class="btn" id="btn-create">
                 Create
         </button>        
-      </form>
-</div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ import { validationMixin } from 'vuelidate';
 import { required, minLength } from 'vuelidate/lib/validators';
 
 export default {
-data() {
+  data() {
     return {
       chatroomName: ""
     };

@@ -1,47 +1,46 @@
 <template>
-  <div class="container">
-    <div v-if="chatrooms.length === 0" class="empty">
-      There is no chatrooms created.
-    </div>
-    <span v-else>
-    <div v-for="chatroom of chatrooms" :key="chatroom.id" class="chatroomList">
-        <div>
-            <span class="chatroomName">
-                <div>{{chatroom.name}}</div>                      
-            </span>
+    <div class="container">
+        <div v-if="chatrooms.length === 0" class="empty">
+          There is no chatrooms created.
         </div>
-        <span>
-            <router-link to="/" class="join">Join</router-link>
-        </span>
-        <span v-if="userUid == chatroom.creatorUid">
-            <button class="btn" v-on:click="deleteChatroom(chatroom.id)">Delete</button>
-        </span>          
-    </div>
+        <span v-else>
+        <div v-for="chatroom of chatrooms" :key="chatroom.id" class="chatroomList">
+            <div>
+                <span class="chatroomName">
+                    <div>{{chatroom.name}}</div>                      
+                </span>
+            </div>
+            <span>
+                <router-link :to="'/chatroom/' + chatroom.id" class="join">Join</router-link>
+            </span>
+            <span v-if="userUid == chatroom.creatorUid">
+                <button class="btn" v-on:click="btnDeleteChatroom(chatroom.id)">Delete</button>
+            </span>          
+        </div>
     </span>
-</div>
-
+    </div>
 </template>
 
 <script>
 import {getChatroomsOrderedByName, deleteChatroom} from '../services/firestore'
-import {getCurrentUSerUid} from '../services/auth'
+import {getCurrentUserUid} from '../services/auth'
 
 export default {
-data: function() {
-    return {
-      userUid:'',
-      chatrooms: []
-    };
-  },
-  methods: {
-      deleteChatroom(name){
-          deleteChatroom(name)
-      }    
-  },
-  created: function() {
-      this.userUid = getCurrentUSerUid();
-    this.$bind("chatrooms", getChatroomsOrderedByName());
-  }
+    data: function() {
+        return {
+            userUid:'',
+            chatrooms: []
+        };
+    },
+    methods: {
+        btnDeleteChatroom(id){
+            deleteChatroom(id)
+        }
+    },
+    created() {
+        this.userUid = getCurrentUserUid();
+        this.$bind("chatrooms", getChatroomsOrderedByName());
+    }
 }
 </script>
 

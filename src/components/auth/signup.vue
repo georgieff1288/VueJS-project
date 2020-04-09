@@ -1,26 +1,24 @@
 <template>
   <div >
     <div class="signUpCard">
-     <form @submit.prevent="register">
-      <h2 class="heading">Sign Up</h2>
+      <form @submit.prevent="register">
+        <h2 class="heading">Sign Up</h2>
 
-     <label class="label">Email</label>
-     <template v-if="$v.email.$error">
-     <br/><span v-if="!$v.email.email">Please enter valid email</span>
-     </template> 
-       <input 
-         type="email"  
-         v-model="email"
-         @blur="$v.email.$touch"
-         placeholder="Enter your email address" 
-         class="formInput"/>
-         
-         
-  
-      <label class="label">Password</label>
-      <template v-if="$v.password.$error">
-      <br/><span v-if="!$v.password.minLength">Password must be at least 6 characters</span>
-      </template>      
+        <label class="label">Email</label>
+        <template v-if="$v.email.$error">
+          <br/><span v-if="!$v.email.email">Please enter valid email</span>
+        </template> 
+        <input 
+          type="email"  
+          v-model="email"
+          @blur="$v.email.$touch"
+          placeholder="Enter your email address" 
+          class="formInput"/>
+
+        <label class="label">Password</label>
+        <template v-if="$v.password.$error">
+          <br/><span v-if="!$v.password.minLength">Password must be at least 6 characters</span>
+        </template>      
         <input     
           type="password"   
           v-model="password"
@@ -28,10 +26,10 @@
           placeholder="Choose a password" 
           class="formInput"/>
 
-      <label class="label">Confirm password</label>
-      <template v-if="$v.confirmPassword.$error">
-      <br/><span v-if="!$v.confirmPassword.sameAs">Password and confirm password does not match</span>
-      </template>       
+        <label class="label">Confirm password</label>
+        <template v-if="$v.confirmPassword.$error">
+          <br/><span v-if="!$v.confirmPassword.sameAs">Password and confirm password does not match</span>
+        </template>       
         <input
           type="password" 
           v-model="confirmPassword"
@@ -39,10 +37,10 @@
           placeholder="Confirm password" 
           class="formInput"/>
   
-      <label class="label">Username</label>
-      <template v-if="$v.displayName.$error">
-      <br/><span v-if="!$v.displayName.minLength">Username must be at least 3 characters</span> 
-      </template> 
+        <label class="label">Username</label>
+        <template v-if="$v.displayName.$error">
+          <br/><span v-if="!$v.displayName.minLength">Username must be at least 3 characters</span> 
+        </template> 
         <input 
           v-model="displayName"
           @blur="$v.displayName.$touch"           
@@ -149,26 +147,27 @@ export default {
 }
 
 #btn-signUp{
-    background-color:rgb(42, 40, 69);
+  background-color:rgb(42, 40, 69);
 }
 
 
 #btn-signUp:disabled{
-    background-color:rgb(238, 238, 238);
-    color: rgb(153, 153, 153);
+  background-color:rgb(238, 238, 238);
+   color: rgb(153, 153, 153);
 }
 
 h2{
-    text-align: center;
-    height: 2em;
+  text-align: center;
+  height: 2em;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .label{
-    font-size: 0.9em;
+  font-size: 0.9em;
+  font-weight: bold;
 }
 
 span{

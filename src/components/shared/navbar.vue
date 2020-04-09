@@ -68,8 +68,6 @@ export default {
     background-color: rgb(54, 152, 218);
 }
 
-
-
 #heading{
     flex: 4;
     padding: 24px 0px 8px 10px;
@@ -102,12 +100,10 @@ export default {
     overflow: hidden;
 }
 
-
-
 #userEmail {
     padding-right: 16px;
     font-weight: bold;
-    font-size: 1.6em;
+    font-size: 1.3em;
     color: rgb(0, 0, 0);
 }
 </style>
