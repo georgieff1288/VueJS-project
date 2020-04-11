@@ -5,6 +5,7 @@ import router from './router';
 import { firestorePlugin } from 'vuefire'
 import Vuelidate from 'vuelidate'
 import moment from 'moment'
+import VueChatScroll from 'vue-chat-scroll'
 
 Vue.config.productionTip = false
 
@@ -14,6 +15,7 @@ Vue.use(VueRouter);
 Vue.use(Vuelidate)
 Vue.use(firestorePlugin)
 Vue.use(moment);
+Vue.use(VueChatScroll);
 
 new Vue({
   render: h => h(App),

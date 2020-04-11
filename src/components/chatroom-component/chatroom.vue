@@ -4,7 +4,7 @@
             <div class="userListWrapper">
                 <UsersList />
             </div>
-            <div class="feedWrapper">
+            <div class="feedWrapper" v-chat-scroll="{always: false, smooth: true}">
                 <MessageFeed />
             </div>
         </div>          
