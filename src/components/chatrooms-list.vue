@@ -68,7 +68,8 @@ export default {
 
 .empty{
    margin-top: 30px;
-   font-size: xx-large; 
+   font-size: xx-large;
+   text-align: center; 
 }
 
 .routerLink{
