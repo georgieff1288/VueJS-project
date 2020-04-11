@@ -29,7 +29,6 @@ export default {
     watch:{
         chatroom:function(newValue){
             if(!newValue){
-                //this.router.navigate(['/chatrooms']).then((  )=> window.alert('Chatroom was deleted')
                 this.$router.push('/chatrooms')
                     .then(()=>{
                         window.alert('Chatroom was deleted.')
